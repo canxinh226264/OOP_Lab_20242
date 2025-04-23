@@ -1,0 +1,25 @@
+*Điều gì xảy ra nếu người dùng chọn “Hủy” (Cancel)?
+  Nếu người dùng nhấn "Hủy" hoặc đóng cửa sổ hộp thoại, phương thức JOptionPane.showConfirmDialog() sẽ trả về JOptionPane.CANCEL_OPTION. Chương trình sẽ hiển thị thông báo: "Bạn đã chọn HỦY hoặc đóng hộp thoại."
+*Làm thế nào để tùy chỉnh các tùy chọn?
+  Có thể sử dụng JOptionPane.showOptionDialog() để thay đổi văn bản của các nút. 
+  Ví dụ:
+import javax.swing.JOptionPane;
+
+public class CustomOptions {
+    public static void main(String[] args) {
+        Object[] options = {"I do", "I don’t"};
+        int choice = JOptionPane.showOptionDialog(null, "Do you agree?", "Custom Options",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+
+        if (choice == 0) {
+            JOptionPane.showMessageDialog(null, "You chose 'I do'.");
+        } else {
+            JOptionPane.showMessageDialog(null, "You chose 'I don’t'.");
+        }
+
+        System.exit(0);
+    }
+}
+  Ví dụ này thay đổi các nút từ "Yes" và "No" thành "I do" và "I don't".
+
+
