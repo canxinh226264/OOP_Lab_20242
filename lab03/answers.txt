@@ -1,0 +1,51 @@
+1. Lớp nào nên triển khai giao diện Comparable?
+
+Lớp đại diện cho đối tượng cần sắp xếp nên triển khai giao diện Comparable. Trong trường hợp này, nếu bạn đang làm việc với giỏ hàng chứa các đối tượng Media như Book, DVD, CD, v.v., thì lớp Media nên triển khai Comparable<Media>.
+
+2. Trong các lớp đó, nên triển khai phương thức compareTo() như thế nào để phản ánh thứ tự mong muốn?
+
+Phương thức compareTo() sẽ được cài đặt dựa trên tiêu chí sắp xếp. Ví dụ, nếu bạn muốn sắp xếp theo tiêu đề (title) rồi đến giá (cost), bạn có thể viết như sau trong lớp Media:
+@Override
+public int compareTo(Media other) {
+    int titleComparison = this.getTitle().compareTo(other.getTitle());
+    if (titleComparison != 0) {
+        return titleComparison;
+    }
+    return Float.compare(this.getCost(), other.getCost());
+}
+
+3. Có thể có hai quy tắc sắp xếp khác nhau (ví dụ: theo tiêu đề rồi giá vs theo giá rồi tiêu đề) khi dùng Comparable không?
+
+Không thể trực tiếp có hai quy tắc sắp xếp khác nhau nếu chỉ sử dụng Comparable, vì Comparable chỉ cho phép duy nhất một cách so sánh (thông qua compareTo()).
+Nếu bạn muốn có nhiều quy tắc sắp xếp, bạn nên dùng thêm Comparator. Bạn có thể tạo nhiều Comparator khác nhau cho từng quy tắc sắp xếp.
+
+4. Giả sử DVD có quy tắc sắp xếp khác với các loại media khác (theo title, rồi độ dài giảm dần, rồi cost). Làm sao thay đổi code để cho phép điều đó?
+
+Có hai cách:
+
+Cách 1: Ghi đè compareTo() trong lớp con DigitalVideoDisc
+Bạn có thể ghi đè phương thức compareTo() trong lớp DigitalVideoDisc để áp dụng logic riêng cho DVD:
+
+@Override
+public int compareTo(Media other) {
+    if (other instanceof DigitalVideoDisc) {
+        DigitalVideoDisc otherDVD = (DigitalVideoDisc) other;
+        int titleComparison = this.getTitle().compareTo(otherDVD.getTitle());
+        if (titleComparison != 0) return titleComparison;
+
+        int lengthComparison = Integer.compare(otherDVD.getLength(), this.getLength());
+        if (lengthComparison != 0) return lengthComparison;
+
+        return Float.compare(this.getCost(), otherDVD.getCost());
+    }
+    return super.compareTo(other);
+}
+Cách 2: Không dùng Comparable, chỉ dùng nhiều Comparator tùy loại
+Bạn có thể viết một số Comparator riêng biệt cho từng loại, ví dụ:
+
+Comparator<DigitalVideoDisc> dvdComparator = Comparator
+        .comparing(DigitalVideoDisc::getTitle)
+        .thenComparing(Comparator.comparingInt(DigitalVideoDisc::getLength).reversed())
+        .thenComparing(DigitalVideoDisc::getCost);
+Rồi dùng Collections.sort(list, dvdComparator) khi cần sắp DVD theo kiểu riêng.
+
