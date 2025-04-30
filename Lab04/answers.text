@@ -1,0 +1,29 @@
+Câu hỏi:
+Programming with AWT and Swing is quite similar (similar elements including container/components, and 
+event-handling). However, there are some differences that you need to note: 
+- Compare the top-level containers in Swing and AWT 
+- Compare the class name of components in AWT and the corresponding class’s name in Swing 
+- Compare the event-handling of Swing and AWT applications 
+The resulting appearances of the applications developed using Swing and AWT might be different as well. 
+Make comparisons.  
+-------------------------------------------------------------------------------------------------------------
+
+1.Các Container Cấp Cao:
+ Các thành phần của AWT(Frame, Dialog, Applet)(Hạng nặng) sử dụng trực tiếp giao diện gốc của hệ điều hành, trong khi Swing vẽ giao diện bằng Java(JFrame, JDialog, JApplet)(Hạng nhẹ) nên dễ tùy chỉnh và đồng nhất trên mọi nền tảng.
+
+ 2.Tên Lớp Thành Phần:
+ -Với AWT: Không có tiền tố J ở trước(Label, Button, TextField,...).
+ -Với Swing: Có tiền tố J ở phía trước (JTextField,JLabel,JButton,...).
+
+ 3.Xử Lý Sự Kiện:
+Tính năng	                                    AWT	                                                 Swing
+Mô hình sự kiện	                   Dựa trên Delegation Event Model	                    Tương tự (kế thừa từ AWT)
+Cách xử lý sự kiện	               Qua lớp riêng hoặc lớp bên trong	           Hỗ trợ thêm lớp ẩn danh (anonymous) và lambda
+Luồng xử lý	                                 Cơ bản	                           Dùng luồng riêng: Event Dispatch Thread (EDT)
+Mức độ linh hoạt	                   Cần xử lý thủ công nhiều hơn	                   Hiện đại và dễ viết hơn với lambda
+
+4.Giao Diện và Trình Bày:
+Tính năng	                                    AWT	                                                 Swing
+Giao diện người dùng	            Giao diện gốc của hệ điều hành	                Có thể thay đổi tùy ý với nhiều chủ đề
+Khả năng tùy biến	                          Giới hạn	                                  Rất linh hoạt, dễ chỉnh sửa
+Tính đồng nhất giữa các OS	             Không bảo đảm	                           Giao diện đồng nhất trên mọi nền tảng
