@@ -1,0 +1,11 @@
+The Aims class must be updated to handle any exceptions generated when the play() methods are called. What happens when you don’t update for them to catch? 
+
+Khi lớp Aims gọi phương thức play() của các đối tượng media (như DigitalVideoDisc hoặc CompactDisc), các phương thức này có thể ném ra các ngoại lệ (ví dụ như ngoại lệ PlayerException tùy chỉnh).
+Nếu bạn không cập nhật lớp Aims để bắt hoặc khai báo các ngoại lệ này, thì sẽ xảy ra:
+Lỗi biên dịch nếu play() ném ra ngoại lệ kiểm tra (checked exception) như PlayerException:
+Java yêu cầu bạn phải xử lý ngoại lệ kiểm tra bằng cách bao quanh mã bằng khối try-catch hoặc khai báo ngoại lệ trong chữ ký phương thức với throws.
+Nếu không làm cả hai, mã của bạn sẽ không thể biên dịch được.
+Nếu ngoại lệ là ngoại lệ không kiểm tra (unchecked exception) như RuntimeException, mã vẫn sẽ biên dịch bình thường nhưng:
+Khi chạy, nếu ngoại lệ xảy ra mà không được bắt, nó sẽ được truyền lên các lớp gọi phía trên.
+Điều này có thể khiến chương trình bị dừng đột ngột hoặc hoạt động sai, dẫn đến trải nghiệm người dùng kém hoặc mất dữ liệu.
+
